@@ -1,0 +1,18 @@
+services:
+  api:
+    build:
+      context: .
+      target: dev
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: 3000
+      # En Docker sobre Windows/Mac a veces el file-watching necesita polling
+      CHOKIDAR_USEPOLLING: "true"
+    volumes:
+      - .:/app
+      - api_node_modules:/app/node_modules
+    command: npm run start:dev
+
+volumes:
+  api_node_modules:

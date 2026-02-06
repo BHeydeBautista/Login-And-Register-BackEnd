@@ -31,6 +31,37 @@
 $ npm install
 ```
 
+## Docker (Windows / Linux / macOS)
+
+### Requisitos (Windows)
+
+- Instala **Docker Desktop** y habilita **Use WSL 2 based engine**.
+- Si no tienes WSL2:
+  - En PowerShell (Admin): `wsl --install`
+  - Reinicia si te lo pide.
+
+Verifica:
+
+```bash
+docker version
+docker compose version
+```
+
+### Levantar en modo desarrollo (con hot-reload)
+
+```bash
+docker compose up --build
+```
+
+Luego abre: `http://localhost:3000`
+
+### Build/Run modo producción
+
+```bash
+docker build --target prod -t nestjs-backend:prod .
+docker run --rm -p 3000:3000 -e PORT=3000 nestjs-backend:prod
+```
+
 ## Compile and run the project
 
 ```bash
