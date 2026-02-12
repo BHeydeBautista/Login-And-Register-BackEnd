@@ -20,14 +20,16 @@ export class AuthService {
 
       registerDto.password = await bcryptjs.hash(registerDto.password, 10)
 
-      return await this.userservice.create(registerDto) 
+      const created = await this.userservice.create(registerDto as any);
+      delete (created as any).password;
+      return created;
     } else { throw new  BadRequestException("User already exists") }
 
      
   }
 
   async login(LoginDto: LoginDto) {
-    const user = await this.userservice.findOneByEmail(LoginDto.email);
+    const user = await this.userservice.findOneByEmail(LoginDto.email, { withPassword: true });
 
     if(!user) { throw new  UnauthorizedException("Invalid Credentials"); } 
 

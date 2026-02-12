@@ -4,6 +4,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
+import * as bcryptjs from 'bcryptjs';
 
 @Injectable()
 export class UsersService {
@@ -13,12 +14,37 @@ export class UsersService {
     private readonly userRepository: Repository<User>,
   ) {}
 
-  create(createUserDto: CreateUserDto) {
-    return this.userRepository.save(createUserDto);
+  async create(createUserDto: CreateUserDto) {
+    const email = createUserDto.email?.trim().toLowerCase();
+
+    let password = createUserDto.password;
+    if (password && !password.startsWith('$2')) {
+      password = await bcryptjs.hash(password, 10);
+    }
+
+    const user = await this.userRepository.save({
+      ...createUserDto,
+      email,
+      password,
+    });
+
+    // Avoid leaking password in responses
+    delete (user as any).password;
+    return user;
   }
 
-  findOneByEmail(email: string){
-    return this.userRepository.findOneBy({email});
+  findOneByEmail(email: string, opts?: { withPassword?: boolean }) {
+    const normalizedEmail = email?.trim().toLowerCase();
+
+    if (opts?.withPassword) {
+      return this.userRepository
+        .createQueryBuilder('user')
+        .addSelect('user.password')
+        .where('user.email = :email', { email: normalizedEmail })
+        .getOne();
+    }
+
+    return this.userRepository.findOne({ where: { email: normalizedEmail } });
   }
 
   findAll() {
