@@ -13,7 +13,11 @@ import type { StringValue } from 'ms';
       global: true,
       inject: [ConfigService],
       useFactory: (config: ConfigService) => {
-        const secret = config.get<string>('JWT_SECRET');
+        const isProd = (config.get<string>('NODE_ENV') ?? 'development') === 'production';
+
+        const secret =
+          config.get<string>('JWT_SECRET') ?? (!isProd ? 'dev_secret_change_me' : undefined);
+
         if (!secret) {
           throw new Error('JWT_SECRET is not set');
         }
