@@ -36,9 +36,13 @@ Servidor: `http://localhost:3000`
 
 Al levantar el backend, abre:
 
-- Swagger UI: `http://localhost:3000/docs`
+- API Docs (UI personalizada): `http://localhost:3000/docs`
 
-Por defecto Swagger está habilitado en desarrollo. En producción se deshabilita salvo que setees `SWAGGER_ENABLED=true`.
+Por defecto está habilitado en desarrollo. En producción se deshabilita salvo que setees `SWAGGER_ENABLED=true`.
+
+Nota: la UI está configurada en modo documentación (sin "try it out / execute").
+
+Branding: el logo que se muestra en `/docs` se sirve desde `public/systemium-logo.svg`. Puedes reemplazar ese archivo por el logo real (mismo nombre) sin tocar código.
 
 ## Variables de entorno
 

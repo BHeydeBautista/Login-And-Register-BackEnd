@@ -1,0 +1,260 @@
+:root {
+  --sys-bg: #0b0b0f;
+  --sys-surface: #111118;
+  --sys-surface-2: rgba(17, 17, 24, 0.65);
+  --sys-border: rgba(255, 255, 255, 0.08);
+  --sys-text: rgba(255, 255, 255, 0.92);
+  --sys-muted: rgba(233, 233, 238, 0.72);
+  --sys-silver: rgba(233, 233, 238, 0.88);
+  --sys-accent: #7c3aed;
+  --sys-accent-2: #a855f7;
+  --sys-shadow: 0 24px 80px rgba(0, 0, 0, 0.55);
+}
+
+html,
+body {
+  background: var(--sys-bg) !important;
+}
+
+body {
+  margin: 0;
+}
+
+/* Make the page background feel continuous (no harsh black at the bottom) */
+body:before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(900px 420px at 50% -140px, rgba(124, 58, 237, 0.22), transparent 65%),
+    radial-gradient(700px 360px at 18% 18%, rgba(168, 85, 247, 0.12), transparent 60%),
+    linear-gradient(180deg, #0b0b0f 0%, #0f1016 35%, #111118 100%);
+}
+
+/* Ensure the docs area fills the viewport */
+.swagger-ui,
+#swagger-ui {
+  min-height: 100vh;
+}
+
+#swagger-ui {
+  padding-bottom: 56px;
+}
+
+/* Hide default Swagger top bar */
+.topbar {
+  display: none !important;
+}
+
+.swagger-ui {
+  color: var(--sys-text);
+}
+
+.swagger-ui * {
+  box-sizing: border-box;
+}
+
+.swagger-ui .wrapper {
+  max-width: 1120px;
+  padding: 0 16px;
+}
+
+/* Header */
+.sys-header {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  background: rgba(11, 11, 15, 0.92);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--sys-border);
+}
+
+.sys-header__inner {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.sys-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.sys-logo {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(124, 58, 237, 0.25);
+  padding: 6px;
+}
+
+.sys-brand {
+  font-size: 14px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--sys-muted);
+  line-height: 1.1;
+}
+
+.sys-title {
+  margin-top: 2px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--sys-silver);
+  line-height: 1.1;
+}
+
+.sys-badge {
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(124, 58, 237, 0.35);
+  color: rgba(255, 255, 255, 0.86);
+  background: rgba(124, 58, 237, 0.12);
+  white-space: nowrap;
+}
+
+/* Info (title card) */
+.swagger-ui .info {
+  margin: 18px 0 18px;
+  padding: 18px 18px 14px;
+  background: linear-gradient(180deg, rgba(17, 17, 24, 0.92), rgba(17, 17, 24, 0.60));
+  border: 1px solid var(--sys-border);
+  border-radius: 16px;
+  box-shadow: var(--sys-shadow);
+  position: relative;
+}
+
+.swagger-ui .info:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--sys-accent), var(--sys-accent-2));
+  opacity: 0.85;
+}
+
+.swagger-ui .info .title {
+  color: var(--sys-text);
+}
+
+.swagger-ui .info a {
+  color: var(--sys-accent-2) !important;
+}
+
+/* Filter */
+.swagger-ui .filter-container {
+  margin: 12px 0 18px;
+}
+
+.swagger-ui input[type='text'],
+.swagger-ui input[type='password'],
+.swagger-ui input[type='search'],
+.swagger-ui textarea {
+  background: rgba(255, 255, 255, 0.04) !important;
+  color: var(--sys-text) !important;
+  border: 1px solid rgba(255, 255, 255, 0.10) !important;
+  border-radius: 12px !important;
+  outline: none;
+}
+
+.swagger-ui input[type='text']:focus,
+.swagger-ui input[type='search']:focus,
+.swagger-ui textarea:focus {
+  border-color: rgba(168, 85, 247, 0.55) !important;
+  box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.18) !important;
+}
+
+/* Docs-only: hide auth + execution UI */
+.swagger-ui .scheme-container {
+  display: none !important;
+}
+
+.swagger-ui .try-out,
+.swagger-ui .execute-wrapper,
+.swagger-ui .btn.execute,
+.swagger-ui .btn.try-out__btn {
+  display: none !important;
+}
+
+/* Tag headers */
+.swagger-ui .opblock-tag {
+  color: var(--sys-silver);
+  border-bottom: 1px solid var(--sys-border);
+  padding: 14px 0 10px;
+}
+
+/* Endpoint cards */
+.swagger-ui .opblock {
+  background: var(--sys-surface);
+  border: 1px solid var(--sys-border);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: none;
+}
+
+.swagger-ui .opblock .opblock-summary {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.swagger-ui .opblock .opblock-summary-method {
+  border-radius: 10px;
+}
+
+/* Slightly nicer method accents */
+.swagger-ui .opblock.opblock-get {
+  border-left: 3px solid rgba(124, 58, 237, 0.65);
+}
+.swagger-ui .opblock.opblock-post {
+  border-left: 3px solid rgba(168, 85, 247, 0.75);
+}
+.swagger-ui .opblock.opblock-patch {
+  border-left: 3px solid rgba(233, 233, 238, 0.45);
+}
+.swagger-ui .opblock.opblock-delete {
+  border-left: 3px solid rgba(168, 85, 247, 0.55);
+}
+
+.swagger-ui .btn,
+.swagger-ui .btn:active,
+.swagger-ui .btn:focus {
+  border-radius: 12px;
+  box-shadow: none;
+}
+
+/* Models */
+.swagger-ui section.models {
+  background: transparent !important;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 16px;
+  box-shadow: none;
+}
+
+.swagger-ui section.models .model-container {
+  background: transparent !important;
+}
+
+.swagger-ui section.models .model-container:hover {
+  background: rgba(255, 255, 255, 0.02) !important;
+}
+
+.swagger-ui .model-box {
+  background: transparent;
+}
+
+/* Code blocks */
+.swagger-ui .microlight {
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+}

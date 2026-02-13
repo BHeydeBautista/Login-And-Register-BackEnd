@@ -1,11 +1,16 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import { NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import helmet from 'helmet';
+import { join } from 'path';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+
+  // Static assets (branding for docs UI)
+  app.useStaticAssets(join(__dirname, '..', 'public'), { prefix: '/public/' });
 
   app.getHttpAdapter().getInstance().disable('x-powered-by');
 
@@ -34,8 +39,8 @@ async function bootstrap() {
 
   if (swaggerEnabled) {
     const config = new DocumentBuilder()
-      .setTitle('nestjs-backend')
-      .setDescription('Auth (JWT) + Users API')
+      .setTitle('SYSTEMIUM API')
+      .setDescription('Technology & Development — Auth (JWT) + Users API')
       .setVersion('1.0')
       .addBearerAuth(
         {
@@ -48,9 +53,18 @@ async function bootstrap() {
       .build();
 
     const document = SwaggerModule.createDocument(app, config);
+
     SwaggerModule.setup('docs', app, document, {
+      customSiteTitle: 'SYSTEMIUM — API Docs',
+      customCssUrl: '/public/swagger-custom.css',
+      customJs: '/public/swagger-custom.js',
+      customfavIcon: '/public/systemium-favicon.svg',
       swaggerOptions: {
-        persistAuthorization: true,
+        persistAuthorization: false,
+        supportedSubmitMethods: [],
+        displayRequestDuration: true,
+        docExpansion: 'none',
+        filter: true,
       },
     });
   }
